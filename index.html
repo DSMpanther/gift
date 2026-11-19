@@ -14,15 +14,16 @@
       justify-content: center;
       align-items: center;
       overflow: hidden;
+      cursor: pointer;
     }
     video {
       width: 100vw;
       height: 100vh;
       object-fit: contain;
     }
-    #unmute-btn {
+    #unmute-pill {
       position: fixed;
-      bottom: 30px;
+      bottom: 40px;
       background: rgba(255, 255, 255, 0.25);
       color: #fff;
       border: 1px solid rgba(255, 255, 255, 0.5);
@@ -31,23 +32,25 @@
       font-family: -apple-system, BlinkMacSystemFont, sans-serif;
       font-size: 16px;
       backdrop-filter: blur(10px);
-      cursor: pointer;
+      pointer-events: none;
     }
   </style>
 </head>
-<body>
+<body onclick="unmute()">
   <video id="giftVideo" autoplay loop muted playsinline>
     <source src="video.mp4" type="video/mp4">
   </video>
-  <button id="unmute-btn" onclick="unmute()">Tap for Sound 🔊</button>
+  <div id="unmute-pill">Tap anywhere for sound 🔊</div>
 
   <script>
     const video = document.getElementById('giftVideo');
-    const btn = document.getElementById('unmute-btn');
+    const pill = document.getElementById('unmute-pill');
     function unmute() {
-      video.muted = false;
-      video.currentTime = 0;
-      btn.style.display = 'none';
+      if (video.muted) {
+        video.muted = false;
+        video.currentTime = 0;
+        pill.style.display = 'none';
+      }
     }
   </script>
 </body>
