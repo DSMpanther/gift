@@ -15,42 +15,66 @@
       align-items: center;
       overflow: hidden;
       cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
     }
     video {
       width: 100vw;
       height: 100vh;
       object-fit: contain;
+      display: none;
     }
-    #unmute-pill {
-      position: fixed;
-      bottom: 40px;
-      background: rgba(255, 255, 255, 0.25);
+    #start-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
       color: #fff;
-      border: 1px solid rgba(255, 255, 255, 0.5);
-      padding: 12px 24px;
-      border-radius: 30px;
       font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-      font-size: 16px;
-      backdrop-filter: blur(10px);
-      pointer-events: none;
+      text-align: center;
+      animation: pulse 2s infinite ease-in-out;
+    }
+    .play-circle {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1.5px solid rgba(255, 255, 255, 0.6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 28px;
+      padding-left: 4px;
+    }
+    .label {
+      font-size: 17px;
+      letter-spacing: 0.5px;
+      opacity: 0.9;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.9; }
+      50% { transform: scale(1.04); opacity: 1; }
     }
   </style>
 </head>
-<body onclick="unmute()">
-  <video id="giftVideo" autoplay loop muted playsinline>
+<body onclick="startGift()">
+  <div id="start-screen">
+    <div class="play-circle">▶</div>
+    <div class="label">Tap to Open</div>
+  </div>
+
+  <video id="giftVideo" playsinline preload="auto">
     <source src="video.mp4" type="video/mp4">
   </video>
-  <div id="unmute-pill">Tap anywhere for sound 🔊</div>
 
   <script>
     const video = document.getElementById('giftVideo');
-    const pill = document.getElementById('unmute-pill');
-    function unmute() {
-      if (video.muted) {
-        video.muted = false;
-        video.currentTime = 0;
-        pill.style.display = 'none';
-      }
+    const startScreen = document.getElementById('start-screen');
+
+    function startGift() {
+      startScreen.style.display = 'none';
+      video.style.display = 'block';
+      video.muted = false;
+      video.play();
     }
   </script>
 </body>
